@@ -4,10 +4,17 @@ from wtforms.validators import DataRequired, Length, ValidationError
 from books_app.models import User
 
 class SignUpForm(FlaskForm):
-    # TODO: Fill out the form fields & validators!
-    pass
+    username = StringField('Username', validators=[DataRequired(), Length(min=1, max=64)])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Sign Up')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('That username is already taken. Please choose another.')
 
 
 class LoginForm(FlaskForm):
-    # TODO: Fill out the form fields & validators!
-    pass
+    username = StringField('Username', validators=[DataRequired(), Length(min=1, max=64)])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')

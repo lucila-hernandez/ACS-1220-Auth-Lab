@@ -21,8 +21,8 @@ def homepage():
     return render_template('home.html', 
         all_books=all_books, all_users=all_users)
 
-
 @main.route('/create_book', methods=['GET', 'POST'])
+@login_required
 def create_book():
     form = BookForm()
 
@@ -42,8 +42,8 @@ def create_book():
         return redirect(url_for('main.book_detail', book_id=new_book.id))
     return render_template('create_book.html', form=form)
 
-
 @main.route('/create_author', methods=['GET', 'POST'])
+@login_required
 def create_author():
     # TODO: Make an AuthorForm instance
 
@@ -55,8 +55,9 @@ def create_author():
     # fields
     return render_template('create_author.html')
 
-
+@login_required
 @main.route('/create_genre', methods=['GET', 'POST'])
+@login_required
 def create_genre():
     # TODO: Make a GenreForm instance
 
